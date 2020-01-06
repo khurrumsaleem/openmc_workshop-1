@@ -132,7 +132,7 @@ def make_materials_geometry_tallies(enrichment_fraction_list,batches = 2, inner_
     
     tally = openmc.Tally(name='TBR')
     tally.filters = [cell_filter_breeder]
-    tally.scores = ['205']
+    tally.scores = ['205'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
     tallies.append(tally)
 
     tally = openmc.Tally(name='blanket_leakage')
@@ -289,7 +289,7 @@ for i in range(number_of_samples,number_of_samples+10):
     example_plot_1d(GP)
 
     # request the proposed evaluation
-    new_x = GP.search_for_maximum()[0]
+    new_x = GP.search_for_maximum()
 
     # evaluate the new point
     new_result = make_materials_geometry_tallies(enrichment_fraction_list = new_x ,batches = 2, inner_radius = 500, thickness = 100, breeder_material_name = 'Li', temperature_in_C = 500)
